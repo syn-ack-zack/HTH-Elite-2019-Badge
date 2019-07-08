@@ -122,4 +122,4 @@ The keyboard/mouse payloads, configuration files, webserver files are all files 
 
 ## Acknowledgments
 * Thanks to all contributes and maintainers of any codebase which was used or referenced. 
-* Special thanks to Hacker Warehouse and Garret Gee for their work on the DC26 badge. Much of the materials around the core components (esp32 / atmega34u ) was referenced from Hacker Warehouse's open sourced badge. 
+* Special thanks to Hacker Warehouse and Garret Gee for the work on their [DC26 badge](https://github.com/hackerwarehouse/HW-DC26-Badge). Much of the materials around the core components (esp32 / atmega34u ) was referenced from Hacker Warehouse's open sourced badge. 
