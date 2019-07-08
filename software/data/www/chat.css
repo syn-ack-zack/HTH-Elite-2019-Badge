@@ -1,0 +1,48 @@
+.chat {
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.messages {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 350px;
+    border-color: #b903b8;
+    border-width: thin;
+    border-style: solid;
+
+}
+
+#chat-log{
+  text-align: left;
+  margin-left: 3%;
+}
+
+#root-message{
+  text-align: center;
+  padding-left: 0%;
+}
+.message {
+    text-align: left;
+    width:100%;
+    padding-left: 3%;
+
+}
+
+#input-message{
+    margin-top: 3%;
+    background-color: transparent;
+    border-color: cyan;
+    display: inline;
+}
+
+.pure-button {
+    color: cyan;
+    border-color: cyan;
+    border-width: thin;
+    border-style: solid;
+    margin-top: 3%;
+    background-color: transparent;
+}
+

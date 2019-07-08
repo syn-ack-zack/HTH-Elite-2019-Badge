@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A layout example with a side menu that hides on mobile, just like the Pure website.">
+    <title>Hackers Teaching Hackers</title>
+    
+    <link rel="stylesheet" href="pure-min.css">
+    <link rel="stylesheet" href="chat.css">
+        <!--[if lte IE 8]>
+            <link rel="stylesheet" href="css/layouts/side-menu-old-ie.css">
+        <![endif]-->
+        <!--[if gt IE 8]><!-->
+            <link rel="stylesheet" href="side-menu.css">
+        <!--<![endif]-->
+</head>
+<body>
+
+
+<div id="layout">
+    <!-- Menu toggle -->
+    <a href="#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+    </a>
+
+    <div id="menu">
+        <div class="pure-menu">
+            <a class="pure-menu-heading" href="#">Menu</a>
+
+            <ul class="pure-menu-list">
+                <li class="pure-menu-item"><a href="index.html" class="pure-menu-link pure-menu-selected">Home</a></li>
+
+                <li class="pure-menu-item"><a href="livepayload.html" class="pure-menu-link">Live Payload</a></li>
+
+                <li class="pure-menu-item menu-item-divided ">
+                    <a href="../storedpayloads.html" class="pure-menu-link">Stored Payloads</a>
+                </li>
+
+                <li class="pure-menu-item"><a href="/edit" class="pure-menu-link">SPIFFS editor</a></li>
+
+                <li class="pure-menu-item"><a href="update.html" class="pure-menu-link">System Updater</a></li>
+
+                <li class="pure-menu-item"><a href="net.html" class="pure-menu-link">HTH Net</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="main">
+        <div class="header">
+             <h1 class="glitch" data-text="HTH">HTH</h1>
+        </div>
+        <div class="content">
+
+                Hackers Teaching Hackers presents this badge as an offensive and defensive platform for wireless interaction. This badge is powered on an ESP32 and an ATMega32 which provides access to Wi-Fi, Bluetooth, LoRa, and mouse emulation. A variety of tools are provided to you but you are encouraged to build, learn and create your own features.
+                <br>
+                <br>
+                In the menu to the left you can find access to HTH Net. This is a proof of concept chat application that takes advantage of the LoRa chip installed on your badge. Using 915Mhz you can legally transmit messages over a long distance using the low voltage supplied with just this badge. We ask you remain respectful when utilizing this feature. 
+                <br>
+                <br>
+                At the time of this revision some of the HID capabilities are not fully functional, however we have included the mouse jiggler feature. This is automatically enabled when USB is connected and will move your cursor a small amount to emulate user activity.
+                <br>
+                <br>
+                Source code and hardware files will be made available at https://github.com/syn-ack-zack 
+
+        </div>
+    </div>
+</div>
+
+<script src="js/ui.js"></script>
+
+</body>
+</html>

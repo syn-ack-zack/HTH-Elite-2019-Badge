@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A layout example with a side menu that hides on mobile, just like the Pure website.">
+    <title>Responsive Side Menu &ndash; Layout Examples &ndash; Pure</title>
+    
+    <link rel="stylesheet" href="pure-min.css">
+    <link rel="stylesheet" href="chat.css">
+        <!--[if lte IE 8]>
+            <link rel="stylesheet" href="css/layouts/side-menu-old-ie.css">
+        <![endif]-->
+        <!--[if gt IE 8]><!-->
+            <link rel="stylesheet" href="side-menu.css">
+        <!--<![endif]-->
+
+            <style type="text/css" media="screen">
+    body {
+      margin:0;
+      padding:0;
+      background-color: black;
+    }
+
+    #dbg, #input_div, #input_el {
+      font-family: monaco;
+      font-size: 12px;
+      line-height: 13px;
+      color: #AAA;
+    }
+
+    #dbg, #input_div {
+      margin:0;
+      padding:0;
+      padding-left:4px;
+    }
+
+    #input_el {
+      width:98%;
+      background-color: rgba(0,0,0,0);
+      border: 0px;
+    }
+    #input_el:focus {
+      outline: none;
+    }
+    </style>
+    <script type="text/javascript">
+    var ws = null;
+    function ge(s){ return document.getElementById(s);}
+    function ce(s){ return document.createElement(s);}
+    function stb(){ window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight); }
+    function sendBlob(str){
+      var buf = new Uint8Array(str.length);
+      for (var i = 0; i < str.length; ++i) buf[i] = str.charCodeAt(i);
+      ws.send(buf);
+    }
+    function addMessage(m){
+      var msg = ce("div");
+      msg.innerText = m;
+      ge("dbg").appendChild(msg);
+      stb();
+    }
+    function startSocket(){
+      ws = new WebSocket('ws://'+document.location.host+'/ws',['arduino']);
+      ws.binaryType = "arraybuffer";
+      ws.onopen = function(e){
+        addMessage("Connected");
+      };
+      ws.onclose = function(e){
+        addMessage("Disconnected");
+      };
+      ws.onerror = function(e){
+        console.log("ws error", e);
+        addMessage("Error");
+      };
+      ws.onmessage = function(e){
+        var msg = "";
+        if(e.data instanceof ArrayBuffer){
+          msg = "BIN:";
+          var bytes = new Uint8Array(e.data);
+          for (var i = 0; i < bytes.length; i++) {
+            msg += String.fromCharCode(bytes[i]);
+          }
+        } else {
+          msg = "TXT:"+e.data;
+        }
+        addMessage(msg);
+      };
+      ge("input_el").onkeydown = function(e){
+        stb();
+        if(e.keyCode == 13 && ge("input_el").value != ""){
+          ws.send(ge("input_el").value);
+          ge("input_el").value = "";
+        }
+      }
+    }
+    function startEvents(){
+      var es = new EventSource('/events');
+      es.onopen = function(e) {
+        addMessage("Events Opened");
+      };
+      es.onerror = function(e) {
+        if (e.target.readyState != EventSource.OPEN) {
+          addMessage("Events Closed");
+        }
+      };
+      es.onmessage = function(e) {
+        addMessage("Event: " + e.data);
+      };
+      es.addEventListener('ota', function(e) {
+        addMessage("Event[ota]: " + e.data);
+      }, false);
+    }
+    function onBodyLoad(){
+      startSocket();
+      startEvents();
+    }
+
+    startSocket();
+    </script>
+
+</head>
+
+
+<body>
+
+
+<div id="layout">
+    <!-- Menu toggle -->
+    <a href="#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+    </a>
+
+    <div id="menu">
+        <div class="pure-menu">
+            <a class="pure-menu-heading" href="#">Menu</a>
+
+            <ul class="pure-menu-list">
+                <li class="pure-menu-item"><a href="index.html" class="pure-menu-link">Home</a></li>
+
+                <li class="pure-menu-item"><a href="livepayload.html" class="pure-menu-link ">Live Payload</a></li>
+
+                <li class="pure-menu-item menu-item-divided ">
+                    <a href="storedpayloads.html" class="pure-menu-link">Stored Payloads</a>
+                </li>
+
+                <li class="pure-menu-item"><a href="/edit" class="pure-menu-link">SPIFFS editor</a></li>
+
+                <li class="pure-menu-item"><a href="websocket.html" class="pure-menu-link  pure-menu-selected">WebSocket</a></li>
+
+                <li class="pure-menu-item"><a href="update.html" class="pure-menu-link">System Updater</a></li>
+
+                <li class="pure-menu-item"><a href="net.html" class="pure-menu-link ">HTH Net</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="main">
+        <div class="header">
+             <h1>HTH</h1>
+            <h2>Hackers Teaching Hackers</h2>
+        </div>
+        <div class="content">
+    <pre id="dbg"></pre>
+    <div id="input_div">
+      $<input type="text" value="" id="input_el">
+    </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/chat.js"></script>
+<script src="js/ui.js"></script>
+
+</body>
+</html>
